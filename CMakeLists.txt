@@ -88,6 +88,8 @@ CHECK_INCLUDE_FILE_CXX("boolinq/boolinq.h" HAS_BOOLINQ)
 # enable evaluation
 set (ENABLE_EVALUATION 1)
 set (DUMP_TIMESTAMP_WORKAROUND 1)
+set (ENABLE_FUSE_PERF_LOGGING 0)
+
 
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/cascade/config.h)
 
@@ -97,6 +99,7 @@ add_subdirectory(src/service)
 add_subdirectory(src/udl_zoo/mproc)
 add_subdirectory(src/udl_zoo/csharp)
 add_subdirectory(src/udl_zoo/python)
+add_subdirectory(src/applications/standalone/dds)
 add_subdirectory(src/applications/tests)
 
 # make libcascade.so
