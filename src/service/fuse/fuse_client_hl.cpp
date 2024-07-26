@@ -278,13 +278,11 @@ static int cascade_fs_read_buf_fptr(const char* path, struct fuse_bufvec **bufp,
     fcc()->fileptrs_in_use.emplace_back(bytes);
     *free_ptr = &cascade_fs_free_buf;
     int msg_id = extract_number(path);
-#ifdef ENABLE_FUSE_PERF_LOGGING
     TimestampLogger::log(AFTER_CASCADE_READ,fcc()->node_id,msg_id,get_walltime());
     if (msg_id % 10 == 0) {
         std::string logger_path = "/root/workspace/cascade/build-Release/src/service/fuse/fuse_cfg/n4/fuse_client_logger.csv";
-        TimestampLogger::flush(logger_path);
+        TimestampLogger::flush(logger_path, false);
     }
-#endif
     return size;
 }
 

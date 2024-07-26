@@ -283,7 +283,7 @@ class PerTopicRegistry {
         registry.emplace(counter, std::make_shared<SubscriberCore>(topic,counter));
         for (const auto& handler: handlers) {
             registry[counter]->add_handler(handler.first,
-                [hdlr=handler.second](const Blob& blob)->void {
+                [hdlr=handler.second](const Blob& blob)->void{
                     dbg_default_trace("subscriber core handler: blob size = {} bytes.", blob.size);
                     const DDSMessageHeader* header_ptr = reinterpret_cast<const DDSMessageHeader*>(blob.bytes);
                     mutils::deserialize_and_run(nullptr,&header_ptr->message_bytes,hdlr);

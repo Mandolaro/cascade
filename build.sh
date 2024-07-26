@@ -67,7 +67,7 @@ fi
 
 build_type=$1
 if [ -z $CASCADE_INSTALL_PREFIX ]; then
-    install_prefix="/root/opt-dev"
+    install_prefix="/usr/local"
 else
     install_prefix=$CASCADE_INSTALL_PREFIX
 fi

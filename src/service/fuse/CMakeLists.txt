@@ -12,13 +12,6 @@ if (${HAS_FUSE})
     add_executable(fuse_perftest perf_test/fuse_perftest.cpp)
     add_executable(fuse_tseektest perf_test/fuse_tseektest.cpp)
     add_executable(fuse_tseektest_put perf_test/fuse_tseektest_put.cpp)
-    add_library(fuse_udl SHARED fuse_udl.cpp)
-    target_include_directories(fuse_udl PRIVATE
-    $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-    $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>
-)
 
     target_include_directories(fuse_client_hl PRIVATE
         $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>
@@ -51,32 +44,6 @@ if (${HAS_FUSE})
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>
-    )
-    target_link_libraries(fuse_udl cascade)
-    add_custom_command(TARGET fuse_udl POST_BUILD
-        COMMAND ln -sf ${CMAKE_CURRENT_BINARY_DIR}/fuse_cfg/dfgs.json.tmp
-        ${CMAKE_CURRENT_BINARY_DIR}/fuse_cfg/n0/dfgs.json
-        COMMAND ln -sf ${CMAKE_CURRENT_BINARY_DIR}/fuse_cfg/dfgs.json.tmp
-        ${CMAKE_CURRENT_BINARY_DIR}/fuse_cfg/n1/dfgs.json
-        COMMAND ln -sf ${CMAKE_CURRENT_BINARY_DIR}/fuse_cfg/dfgs.json.tmp
-        ${CMAKE_CURRENT_BINARY_DIR}/fuse_cfg/n2/dfgs.json
-        COMMAND ln -sf ${CMAKE_CURRENT_BINARY_DIR}/fuse_cfg/dfgs.json.tmp
-        ${CMAKE_CURRENT_BINARY_DIR}/fuse_cfg/n3/dfgs.json
-        COMMAND ln -sf ${CMAKE_CURRENT_BINARY_DIR}/fuse_cfg/dfgs.json.tmp
-        ${CMAKE_CURRENT_BINARY_DIR}/fuse_cfg/n4/dfgs.json
-        COMMAND ln -sf ${CMAKE_CURRENT_BINARY_DIR}/fuse_cfg/udl_dlls.cfg.tmp
-        ${CMAKE_CURRENT_BINARY_DIR}/fuse_cfg/n0/udl_dlls.cfg
-        COMMAND ln -sf ${CMAKE_CURRENT_BINARY_DIR}/fuse_cfg/udl_dlls.cfg.tmp
-        ${CMAKE_CURRENT_BINARY_DIR}/fuse_cfg/n1/udl_dlls.cfg
-        COMMAND ln -sf ${CMAKE_CURRENT_BINARY_DIR}/fuse_cfg/udl_dlls.cfg.tmp
-        ${CMAKE_CURRENT_BINARY_DIR}/fuse_cfg/n2/udl_dlls.cfg
-        COMMAND ln -sf ${CMAKE_CURRENT_BINARY_DIR}/fuse_cfg/udl_dlls.cfg.tmp
-        ${CMAKE_CURRENT_BINARY_DIR}/fuse_cfg/n3/udl_dlls.cfg
-        COMMAND ln -sf ${CMAKE_CURRENT_BINARY_DIR}/fuse_cfg/udl_dlls.cfg.tmp
-        ${CMAKE_CURRENT_BINARY_DIR}/fuse_cfg/n4/udl_dlls.cfg
-        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/fuse_cfg/dfgs.json.tmp
-                ${CMAKE_CURRENT_SOURCE_DIR}/fuse_cfg/udl_dlls.cfg.tmp
-        COMMENT "prepare fuse_udl configuration"
     )
 
     target_link_libraries(fuse_client_hl cascade readline fuse3)
