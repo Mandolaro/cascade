@@ -17,6 +17,10 @@ using namespace derecho::cascade;
 #define READ_START_TIME 1000
 #define READ_END_TIME 1004
 
+
+// To collect timestamp defined in fcc_hl.hpp and fuse_client_hl.cpp, 
+// Set flag ENABLE_FUSE_PERF_LOGGING to 1 in CMakeLists.txt 
+
 void record_timestamp(std::vector<std::chrono::nanoseconds> timestamps, std::string& file_name, uint32_t file_size, uint32_t runs) {
     std::ofstream perf_file("perf/" + file_name, std::ios::binary);
     int64_t total_time = 0;
@@ -57,7 +61,7 @@ void read_test(uint32_t file_size, uint32_t runs, const std::filesystem::path& p
         usleep(10000);
     }
     std::string logger_path = "fuse_perftest_logger.csv"; 
-    TimestampLogger::flush(logger_path, false);
+    TimestampLogger::flush(logger_path);
 }
 
 // TODO (chuhan) : add logger for write tests
@@ -84,7 +88,7 @@ void write_test(uint32_t file_size, uint32_t runs, const std::filesystem::path& 
         usleep(10000);
     }
     std::string file_name = "write_perf_" + std::to_string(file_size / 1024) + "_kb_" + std::to_string(runs) + "_runs_perftest.csv"; 
-    TimestampLogger::flush(file_name, false);
+    TimestampLogger::flush(file_name);
 }
 
 int main(int argc, char* argv[]) {
